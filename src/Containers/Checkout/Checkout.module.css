@@ -1,0 +1,33 @@
+.Checkout{
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.OrderItems{
+    width: 100%;
+}
+
+.Item{
+    max-height: 200px;
+    background-color: lightgray;
+    margin: 15px;
+    border: 1px solid black;
+}
+
+.PaymentDetails{
+    border: 1px solid lightgray;
+    padding: 15px;
+    max-height: 200px;
+}
+
+.Title{
+    margin: 0px 10px 10px 0px;
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+}
+
+.Username{
+    margin: 5px 0px 0px 10px;
+    padding: 0px;
+}

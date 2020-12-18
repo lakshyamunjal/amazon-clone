@@ -1,0 +1,44 @@
+.Subtotal{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: auto;
+    padding: 20px;
+}
+
+.Gift{
+    display: flex;
+    align-items: center;
+}
+
+.Checkbox{
+    margin-right: 5px;
+}
+
+.CheckoutButton{
+    background: #f0c14b;
+    border: 1px solid;
+    margin: 10px;
+    padding: 3px;
+    color: #111;
+    border-color: #a88734 #9c7e31 #846a29;
+    width: 100%;
+}
+
+@media only screen and (max-width: 800px){
+    .CheckoutButton{
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 700px){
+    .CheckoutButton{
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .CheckoutButton{
+        width: 40%;
+    }
+}

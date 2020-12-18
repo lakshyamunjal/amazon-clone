@@ -1,0 +1,87 @@
+.header{
+    display: flex;
+    height: 50px;
+    align-items: center;
+    background-color: #131921;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo{
+    width: 100px;
+    object-fit: contain;
+    margin: 10px;
+    margin-top: 20px;
+    height: auto;
+}
+
+.inputField{
+    width: 100%;
+    border: none;
+    padding: 10px;
+    height: 28px;
+    border-color: #cd9042;
+}
+
+.SearchIcon{
+    background-color: #cd9042;
+    height: 28px !important;
+    padding-left: 2px;
+}
+
+.search{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    border-radius: 24px;
+}
+
+.navigation{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+.option{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: white;
+}
+
+.lineOne{
+    font-size: 0.9vw;
+    width: auto;
+}
+
+.lineTwo{
+    font-size: 1.2vw;
+    font-weight: bold;
+}
+
+.Basket{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    color: white;
+    align-items: center;
+    
+}
+
+a:hover{
+    color: white;
+    text-decoration: none;
+}
+
+a{
+    color: white;
+}
+
+.basketCount{
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-right: 10px;
+    font-size: 0.9vw;
+}

@@ -1,0 +1,35 @@
+.Payment{
+    background-color: white;    
+}
+
+.Heading{
+    text-align: center;
+    padding: 10px;
+    background-color: rgb(234, 237, 237);
+    border-bottom: 1px solid lightgray;
+}
+
+.Items{
+    width: 100%;
+}
+
+.Address{
+    flex: 0.7;
+}
+
+.Section{
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid lightgray;
+    margin: 0 20px;
+    font-size: 1.5vw;
+}
+
+.Title{
+    flex: 0.3;
+    font-size: 2vw;
+}
+
+.PaymentDetails{
+    flex: 0.3;
+}
