@@ -1,11 +1,12 @@
 const functions = require('firebase-functions');
+const constants = require('./constants');
 
 // using Express for backend and hosting it on firebase
 const express = require('express');
 // cors is required to make cross-platform requests
 const cors = require('cors');
 
-const stripeSecretKey = "sk_test_51HzjrRLqYQpz7YYBvK2UI32DVKOm49KXgCCX1PJa6fOizaVMdckQjbnf9VXRNFWRjURxe73AVst4gkvn2PJVKnOq00wWlYdzdq";
+const stripeSecretKey = constants.stripePrivateKey;
 const stripe = require("stripe")(stripeSecretKey);
 
 // API
@@ -34,8 +35,14 @@ app.post("/payments/create", async(request, response) => {
     const paymentIntent = await stripe.paymentIntents.create({
         amount: orderAmount,
         currency: "INR",
-        description: `Customer email: ${customerEmail}`
+        description: `Customer email: ${customerEmail}`,
+//        capture_method: 'manual',       // manual means that customer has to authorize the payment
     });
+    // .then((req, resp) => {
+    //     console.log("Payment initialted :::: Amount: ", req.amount/100, ", Trans id: ", req.id);
+    // }).catch(err => {
+    //     console.log("Error: ", err);
+    // });
     // 201 is for something is created
     response.status(201).send({
         clientSecret : paymentIntent.client_secret,

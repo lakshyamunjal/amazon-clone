@@ -10,6 +10,7 @@ import { authetication } from './firebase';
 import { useStateValue } from './StateProvider';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import Orders from './Containers/Orders/Orders';
 
 const stripeAPIkey = "pk_test_51HzjrRLqYQpz7YYBTgt7qzcv3dY02vkHAk9RqVDiI2L9b366IX7bINvY3E9hFPmUONnD8fPpoabULkgJbyDLamjy00WWOgjzpT";
 const promise = loadStripe(stripeAPIkey);
@@ -48,6 +49,11 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
+
+          <Route path='/orders'>
+            <Header />
+            <Orders />
+          </Route>
 
           <Route path='/login'>
             <Header />

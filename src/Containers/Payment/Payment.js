@@ -7,6 +7,7 @@ import ProductPrice from '../../Components/ProductPrice';
 import { getBasketTotal } from '../../reducer';
 import { useHistory } from 'react-router-dom';
 import axios from '../../axios';
+import { database } from '../../firebase';
 
 function Payment() {
 
@@ -38,7 +39,7 @@ function Payment() {
                 method: 'POST',
                 // Stripe excepts the total in a currencies subunits,i.e., it should be sent in paise instead of rupees
                 // be it any curreny, it must be converted to its lowest form
-                url: `/payments/create?total=${getBasketTotal(basket) * 100}&email=${user ? user.email: "Guest"}`,
+                url: `/payments/create?total=${getBasketTotal(basket) * 100}&email=${user ? user.email : "Guest"}`,
 
             });
             setClientSecret(response.data.clientSecret);
@@ -46,7 +47,7 @@ function Payment() {
 
         getClientSecret();
         // here basket defines that, whenever the basket will change, we will require a new client secret to accept the payment
-    }, [basket])
+    }, [basket]);
 
     console.log(`Clinet secret: ${clientSecret}`);
 
@@ -62,13 +63,36 @@ function Payment() {
             }
         }).then(({ paymentIntent }) => {
             // paymentIntent is payment confirmation
+            console.log(paymentIntent);
+            
+            // store order info to firebase database
+            const collectionName = 'users';
+            // every user can have multiple orders, so orders is a collection
+            // paymentIntent.id is treated as order id
+            
+            database.collection(collectionName)
+            .doc(user?.uid)             // this uid is got from user and it is set in App.js when user is successfully logged in. uid is supplied by Firebase on successfull login.
+            .collection('orders')
+            .doc(paymentIntent.id).set({
+                basket: basket,
+                amount: paymentIntent.amount,
+                created: paymentIntent.created          // time of creation
+            });
+            
             setSuccedded(true);
             setError(null);
             setProcessing(false);
+            
+            // empty basket
+            dispatch({
+                type: 'EMPTY_BASKET',
+            });
 
             // replace is used because we dont want user to click back button and come back to payment page again after successful
             // payment
             history.replace('/orders');
+        }).catch(err => {
+            console.log(err);
         });
 
 
@@ -143,7 +167,7 @@ function Payment() {
                         </div>
                     </form>
                     <div>
-                        {error ? console.log(error.message) : null}
+                        {error != null ? console.log(error.message) : null}
                     </div>
                 </div>
             </div>

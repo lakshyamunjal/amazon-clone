@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { constants } from './constants';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:5001/clone-155e6/us-central1/api',        // this URL is generated when firebase is executed on Local Machine
+    baseURL: constants.localFirebaseURL,        // this URL is generated when firebase is executed on Local Machine
     // API(cloud function) url
 });
 

@@ -36,7 +36,8 @@ function Checkout() {
                             image={item.image}
                             title={item.title}
                             price={item.price}
-                            rating={item.rating} />)
+                            rating={item.rating}
+                            hideButton={false} />)
                     }
 
                     )

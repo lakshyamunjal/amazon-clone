@@ -53,7 +53,9 @@ function Header() {
 
                 <div className={classes.option}>
                     <span className={classes.lineOne}>Returns</span>
-                    <span className={classes.lineTwo}>&Orders</span>
+                    <Link to='/orders'>
+                        <span className={classes.lineTwo}>&Orders</span>
+                    </Link>
                 </div>
 
                 <div className={classes.option}>
