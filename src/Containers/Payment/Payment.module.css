@@ -1,23 +1,46 @@
-.Payment{
-    background-color: white;    
+.Payment {
+    background-color: white;
 }
 
-.Heading{
+.Heading {
     text-align: center;
     padding: 10px;
     background-color: rgb(234, 237, 237);
     border-bottom: 1px solid lightgray;
 }
 
-.Items{
-    width: 100%;
+.ReviewTitle{
+    flex: 0.22;
+    font-size: 2vw;
 }
 
-.Address{
+.DisableButton{
+    border-radius: 5px;
+    font-size: 1.3vw;
+}
+
+.Items {
+    flex: 0.75;
+}
+
+.ReviewItems{
     flex: 0.7;
 }
 
-.Section{
+.Address {
+    flex: 0.75;
+}
+
+h5{
+    font-size: 2vw;
+}
+
+.PersonInfo{
+    font-size: 1.1vw;
+    margin: 0px;
+}
+
+.Section {
     display: flex;
     padding: 20px;
     border-bottom: 1px solid lightgray;
@@ -25,11 +48,33 @@
     font-size: 1.5vw;
 }
 
-.Title{
-    flex: 0.3;
+.Title {
+    flex: 0.25;
     font-size: 2vw;
 }
 
-.PaymentDetails{
+.PaymentDetails {
     flex: 0.3;
+}
+
+.Price {
+    font-size: 1.05vw;
+}
+
+.PayButton {
+    background: #f0c14b;
+    border: 1px solid;
+    margin: 20px;
+    padding: 3px;
+    color: #111;
+    border-color: #a88734 #9c7e31 #846a29;
+    align-items: center;
+    width: 50%;
+    font-size: 1.05vw;
+    border-radius: 5px;
+}
+
+.ButtonDiv{
+    display: flex;
+    justify-content: center;
 }

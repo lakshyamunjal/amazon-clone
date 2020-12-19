@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './Payment.module.css';
 import { useStateValue } from '../../StateProvider';
 import CheckoutProduct from '../../Components/CheckoutProduct/CheckoutProduct';
 import { useElements, useStripe, CardElement } from '@stripe/react-stripe-js';
+import ProductPrice from '../../Components/ProductPrice';
+import { getBasketTotal } from '../../reducer';
+import { useHistory } from 'react-router-dom';
+import axios from '../../axios';
 
 function Payment() {
 
     const [{ basket, user }, dispatch] = useStateValue();
+    const history = useHistory();
+
+    // bootstrap spinner
+    const spinner = (
+        <div className="spinner-border text-light spinner-border-sm" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    );
 
     // used for payment functionality
     const stripe = useStripe();
@@ -14,18 +26,61 @@ function Payment() {
 
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(true);
+    const [succedded, setSuccedded] = useState(false);
+    const [processing, setProcessing] = useState("");
+    const [clientSecret, setClientSecret] = useState("");       // it is required to get payment from the client
 
-    const handleSubmit = (event) => {
+    useEffect(() => {
+        // generate special stripe secret which allow us to charge the customer
+
+        const getClientSecret = async () => {
+            const response = await axios({
+                method: 'POST',
+                // Stripe excepts the total in a currencies subunits,i.e., it should be sent in paise instead of rupees
+                // be it any curreny, it must be converted to its lowest form
+                url: `/payments/create?total=${getBasketTotal(basket) * 100}&email=${user ? user.email: "Guest"}`,
+
+            });
+            setClientSecret(response.data.clientSecret);
+        }
+
+        getClientSecret();
+        // here basket defines that, whenever the basket will change, we will require a new client secret to accept the payment
+    }, [basket])
+
+    console.log(`Clinet secret: ${clientSecret}`);
+
+    const handleSubmit = async (event) => {
         // all the stripe stuff
+        event.preventDefault();
+        setProcessing(true);
+
+        const cardNumber = elements.getElement(CardElement);     // CardElement is written below and it displays the Card Number input area
+        const payload = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: cardNumber,
+            }
+        }).then(({ paymentIntent }) => {
+            // paymentIntent is payment confirmation
+            setSuccedded(true);
+            setError(null);
+            setProcessing(false);
+
+            // replace is used because we dont want user to click back button and come back to payment page again after successful
+            // payment
+            history.replace('/orders');
+        });
+
+
 
     }
 
     const handleChange = (event) => {
         // listen to the card number that the user is entering
         // and display any error if they occur
-        if(event.error)
+        if (event.error)
             console.log(event.error.message);
-            
+
         setDisabled(event.empty);
         setError(event.error ? event.error.message : null);
     }
@@ -38,20 +93,20 @@ function Payment() {
 
             <div className={classes.Section}>
                 <div className={classes.Title}>
-                    <h5>Delivery Address</h5>
+                    <h6>Delivery Address</h6>
                 </div>
                 <div className={classes.Address}>
-                    <p style={{ 'margin': 0 }}>{user && user.email ? user.email : "Guest"}</p>
-                    <p style={{ 'margin': 0 }}>123, React Lane</p>
-                    <p style={{ 'margin': 0 }}>Facebook city</p>
+                    <p className={classes.PersonInfo}>{user && user.email ? user.email : "Guest"}</p>
+                    <p className={classes.PersonInfo}>123, React Lane</p>
+                    <p className={classes.PersonInfo}>Facebook city</p>
                 </div>
             </div>
 
             <div className={classes.Section}>
-                <div className={classes.Title}>
-                    <h5>Review Items and Delivery</h5>
+                <div className={classes.ReviewTitle}>
+                    <h6>Review Items</h6>
                 </div>
-                <div className={classes.Items}>
+                <div className={classes.ReviewItems}>
                     {basket.map(item => {
                         return (
                             <CheckoutProduct
@@ -60,6 +115,7 @@ function Payment() {
                                 title={item.title}
                                 price={item.price}
                                 rating={item.rating}
+                                style={{ marginLeft: '0' }}
                             />
                         )
                     })}
@@ -68,13 +124,27 @@ function Payment() {
 
             <div className={classes.Section}>
                 <div className={classes.Title}>
-                    <h5>Payment Method</h5>
+                    <h6>Payment Method</h6>
                 </div>
 
                 <div className={classes.PaymentDetails}>
                     <form onSubmit={handleSubmit}>
                         <CardElement onChange={handleChange} />
+                        <strong className={classes.Price}>
+                            Total Price: <ProductPrice price={getBasketTotal(basket)} />
+                        </strong>
+                        <br />
+                        <div className={classes.ButtonDiv}>
+                            <button
+                                disabled={processing || disabled || succedded}
+                                className={!disabled ? classes.PayButton : classes.DisableButton}>
+                                {processing ? spinner : "Pay now"}
+                            </button>
+                        </div>
                     </form>
+                    <div>
+                        {error ? console.log(error.message) : null}
+                    </div>
                 </div>
             </div>
         </div>

@@ -5,15 +5,17 @@
 }
 
 .ImageColumn {
-    width: 10vw;
-    margin: 5px;
+    width: 15vw;
+    margin: 10px;
+    margin-left: 0px;
+    display: flex;
+    justify-content: center;
 }
 
 .Image {
     width: auto;
     height: 15vh;
-    display: flex;
-    margin: 0 auto;
+
 }
 
 .Information {
@@ -29,6 +31,8 @@
     padding: 3px;
     color: #111;
     border-color: #a88734 #9c7e31 #846a29;
-    width: 30%;
+    width: 20%;
     margin-top: 10px;
+    font-size: 1.05vw;
+    border-radius: 5px;
 }

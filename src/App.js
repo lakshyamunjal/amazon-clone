@@ -18,6 +18,8 @@ function App() {
 
   const [{ }, dispatch] = useStateValue();
 
+  // it is going to store the email of the user in our current state
+  // which can be used throughout the App
   useEffect(() => {
     // it will only run once when App component loads!
     // onAuthStateChanged will make sure that if there is any change in the authenication, useEffect is fired again

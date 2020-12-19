@@ -25,7 +25,7 @@ function CheckoutProduct({ id, image, title, price, rating }) {
                 <strong style={{fontSize: '1.2vw'}}>{title}</strong>
                 <ProductPrice price={price} />
                 <span style={{fontSize: '1.2vw'}}>{"⭐".repeat(rating)}</span>
-                <Button className={classes.RemoveButton} onClick={removeFromBasket}>Remove Item</Button>
+                <button className={classes.RemoveButton} onClick={removeFromBasket}>Remove Item</button>
             </div>
         </div>
     )

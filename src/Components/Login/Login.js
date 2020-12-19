@@ -12,8 +12,14 @@ function Login() {
     const invalidEmailErrorMessage = (<p className={classes.ErrorMessage}>Invalid email id!</p>);
 
     // bootstrap spinner
-    const spinner = (
-        <div className="spinner-border" role="status">
+    const loginSpinner = (
+        <div className="spinner-border text-light spinner-border-sm" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    );
+
+    const registerSpinner = (
+        <div className="spinner-border text-warning spinner-border-sm" role="status">
             <span class="sr-only">Loading...</span>
         </div>
     );
@@ -22,7 +28,8 @@ function Login() {
     // state in Functional components
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [displaySpinner, setDisplaySpinner] = useState(false);
+    const [showLoginSpinner, setShowLoginSpinner] = useState(false);
+    const [showRegisterSpinner, setShowRegisterSpinner] = useState(false);
 
     const [isValidUser, setValidUser] = useState(true);
     const [isNewUser, setNewUser] = useState(true);
@@ -31,7 +38,7 @@ function Login() {
     const signIn = (event) => {
         setNewUser(true);       // hide register error message if visible
         setValidEmailForRegistration(true);     // hide invalid email error message if visible
-        setDisplaySpinner(true);
+        setShowLoginSpinner(true);
 
         // by default, page will refresh because this function is linked to a button inside a form
         event.preventDefault();     // prevents the page to refresh
@@ -42,17 +49,15 @@ function Login() {
         promise.then(resp => {
             history.push('/');
         }).catch(err => {
-            //alert(err.message);
             setValidUser(false);
-            setDisplaySpinner(false);
+            setShowLoginSpinner(false);
             console.log(err);
-            //document.getElementById('errorMessage').style.visibility = 'visible';
         });
     }
 
     const register = () => {
         setValidUser(true);
-        setDisplaySpinner(true);
+        setShowRegisterSpinner(true);
 
         // move to registration page
         const promise = authetication.createUserWithEmailAndPassword(email, password);
@@ -64,18 +69,18 @@ function Login() {
         }).catch(err => {
             if (err.message.includes("badly formatted")) {
                 // invalid email
-                console.log("Invaldi emaild");
+                console.log("Invalid emaild");
                 setValidEmailForRegistration(false);
             }
-            
+
             if (err.message.includes("another account")) {
                 // email id already in use
                 console.log("Duplicate email");
                 setValidEmailForRegistration(false);
                 setNewUser(false);
             }
-            
-            setDisplaySpinner(false);
+
+            setShowRegisterSpinner(false);
             console.log(err.message);
         })
 
@@ -109,16 +114,28 @@ function Login() {
                         onFocus={hideErrorMessage}        // hide error message
                         onChange={(event) => { setPassword(event.target.value) }} />
                     <br />
-                    <button className={classes.SignIn} onClick={signIn}>Sign In</button>
+
+                    <button
+                        className={classes.SignIn}
+                        onClick={signIn}
+                        disabled={showLoginSpinner}>
+                        {showLoginSpinner ? loginSpinner : "Sign In"}
+                    </button>
+
                     {isValidUser == false ? loginErrorMessage : null}
                     <br />
                 </form>
             </div>
             <p className={classes.NewUser}>New to Amazon ?</p>
-            <button id='registerButton' className={classes.Register} onClick={register}>Create your amazon account</button>
+
+            <button id='registerButton'
+                className={classes.Register}
+                onClick={register}
+                disabled={showRegisterSpinner}
+            >{showRegisterSpinner ? registerSpinner : "Create your amazon account"}</button>
+
             {isNewUser == false ? registerErrorMessage : isValidEmailForRegistration == false ? invalidEmailErrorMessage : null}
-            <br/>
-            {displaySpinner ? spinner : null}
+            <br />
         </div>
     )
 }
