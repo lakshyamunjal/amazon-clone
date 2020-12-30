@@ -1,15 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './Subtotal.module.css';
 import CurrencyFormat from 'react-currency-format';
-import { Link } from 'react-router-dom';
 import { useStateValue } from '../../StateProvider';
 import { getBasketTotal } from '../../reducer';
-import classNames from 'classnames';
-import Button from 'react-bootstrap/Button';
+import { useHistory } from 'react-router';
 
-function Subtotal(props) {
+function Subtotal() {
     let checkboxStatus = false;
-    const [{ basket }, dispatch] = useStateValue();
+    const history = useHistory();
+    const [{ user, basket }, dispatch] = useStateValue();
+    const [isBasketTotalZero, setBasketTotalZero] = useState(true);
+    
+    const handleButtonClick = () => {
+        // check if user is logged in, if not, move to login page
+        if (user == null) {
+            history.push('/login');
+        } else {
+            history.push('/payment');
+        }
+    }
+
+    const enableCheckoutButton = (
+        <button className={classes.CheckoutButton} onClick={handleButtonClick}>
+            Proceed to checkout
+        </button>
+    );
+
+    const disableCheckoutButton = (
+        <button className={classes.DisableCheckoutButton} disabled>
+            Proceed to checkout
+        </button>
+    );
 
     const checkboxClicked = () => {
         checkboxStatus = !checkboxStatus;
@@ -17,13 +38,19 @@ function Subtotal(props) {
     }
 
     useEffect(() => {
-        if (getBasketTotal(basket) != 0) {
+        let basketTotal = getBasketTotal(basket);
+        console.log("Basket total: ", basketTotal);
+
+        if (basketTotal != 0) {
+            setBasketTotalZero(false);
             document.getElementById('giftCheckbox').disabled = false;
-            console.log('Enable checkbox');
-        }else{
+        } else {
+            setBasketTotalZero(true);
             document.getElementById('giftCheckbox').disabled = true;
         }
-    }, []);
+
+        //  basket in these [] state that whenever there is some change in the basket, useEffect will be executed again
+    }, [basket]);
 
 
     return (
@@ -49,11 +76,9 @@ function Subtotal(props) {
                 thousandSeparator={true}
                 thousandSpacing={'2s'}
             />
-            <Link to='/payment'>
-                <Button className={classNames(classes.CheckoutButton, 'btn')}>
-                    Proceed to checkout
-                </Button>
-            </Link>
+
+            {isBasketTotalZero ? disableCheckoutButton : enableCheckoutButton}
+
         </div>
     )
 }

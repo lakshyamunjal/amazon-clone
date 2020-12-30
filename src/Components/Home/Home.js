@@ -10,7 +10,7 @@ function Home() {
 
             {/* Products */}
             <div className={classes.row}>
-                <Product id='21231' title="The Immortals of Meluha" imageURL="https://images-na.ssl-images-amazon.com/images/I/81zHwTa288L.jpg" price="250" rating="4" />
+                <Product id='21231' title="OnePlus 8 Pro (Onyx Black 8GB RAM+128GB Storage)" imageURL="https://images-na.ssl-images-amazon.com/images/I/61YSMhOd5EL._SL1500_.jpg" price="54999" rating="4" />
                 <Product id='21141' title='Nescafe gold - 100g' imageURL='https://m.media-amazon.com/images/I/61xyIiQb9XL._AC_UL320_.jpg' price='451' rating='5' />
             </div>
 

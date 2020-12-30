@@ -15,7 +15,7 @@ const stripe = require("stripe")(stripeSecretKey);
 const app = express();
 
 // Middlewares
-app.use(cors({origin: true}));
+app.use(cors({ origin: true }));
 app.use(express.json());        // transmit data in JSON form
 
 // API routes
@@ -27,16 +27,17 @@ app.get("/", (request, response) => {
     response.status(200).send("Hello World!");
 })
 
-app.post("/payments/create", async(request, response) => {
+
+app.post("/payments/create", async (request, response) => {
     const orderAmount = request.query.total;
     const customerEmail = request.query.email;
-    console.log("Payment request received: " , orderAmount);
+    console.log("Payment request received: ", orderAmount);
 
     const paymentIntent = await stripe.paymentIntents.create({
         amount: orderAmount,
         currency: "INR",
         description: `Customer email: ${customerEmail}`,
-//        capture_method: 'manual',       // manual means that customer has to authorize the payment
+        //        capture_method: 'manual',       // manual means that customer has to authorize the payment
     });
     // .then((req, resp) => {
     //     console.log("Payment initialted :::: Amount: ", req.amount/100, ", Trans id: ", req.id);
@@ -45,8 +46,17 @@ app.post("/payments/create", async(request, response) => {
     // });
     // 201 is for something is created
     response.status(201).send({
-        clientSecret : paymentIntent.client_secret,
+        clientSecret: paymentIntent.client_secret,
     });
+});
+
+app.post("/cancelorder", async (req, res) => {
+    const paymentIntent = req.query.paymentIntent;
+    const refund = await stripe.refunds.create({
+        payment_intent: paymentIntent,
+    });
+
+    res.status(200).send("Cancel order");
 });
 
 // listeners

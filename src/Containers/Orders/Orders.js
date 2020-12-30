@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Login from '../../Components/Login/Login';
 import OrderElement from '../../Components/OrderElement/OrderElement';
-import {database} from '../../firebase';
+import { database } from '../../firebase';
 import { useStateValue } from '../../StateProvider';
 import classes from './Orders.module.css';
 
@@ -9,6 +10,8 @@ function Orders() {
     const [{ basket, user }, disaptch] = useStateValue();
     const [orders, setOrders] = useState([]);
     const [data, setData] = useState(false);
+
+    let userLoggedIn = false;
 
     const spinnerStyle = {
         width: "10rem",
@@ -23,9 +26,10 @@ function Orders() {
         </div>
     );
 
-    // run only once when this component is loaded
+
     useEffect(() => {
         if (user) {
+            userLoggedIn = true;
             database
                 .collection('users')
                 .doc(user?.uid)
@@ -39,19 +43,19 @@ function Orders() {
                         }
                     }))
                 });
-                {setData(true)}
+            { setData(true) }
         } else {
             setOrders([]);
         }
-        
-    }, [user] //these braces makes sure that useEffect will only run when there is some change in user which is setup at Login time in App.js
+
+    }, [user] //these braces makes sure that useEffect will only run when there is some change in "user" which is setup at Login time in App.js
     );
-    
+
+
     return (
         <div>
-
             <h2 className={classes.Heading}>Orders</h2>
-            {data == false ? spinner : null}
+            {user == null ? null : data == false ? spinner : null}
             <div className={classes.Order}>
                 {orders?.map(order => {
                     return <OrderElement key={order.id} orderDetails={order} />

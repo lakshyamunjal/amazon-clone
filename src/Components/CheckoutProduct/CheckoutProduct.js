@@ -18,17 +18,19 @@ function CheckoutProduct({ id, image, title, price, rating, hideButton }) {
     const checkoutButton = (<button className={classes.RemoveButton} onClick={removeFromBasket}>Remove Item</button>);
 
     return (
+
         <div className={classes.CheckoutProduct}>
             <div className={classes.ImageColumn}>
                 <img src={image} className={classes.Image} />
             </div>
             <div className={classes.Information}>
-                <strong style={{fontSize: '1.2vw'}}>{title}</strong>
+                <strong style={{ fontSize: '1.2vw' }}>{title}</strong>
                 <ProductPrice price={price} />
-                <span style={{fontSize: '1.2vw'}}>{"⭐".repeat(rating)}</span>
+                <span style={{ fontSize: '1.2vw' }}>{"⭐".repeat(rating)}</span>
                 {hideButton == false ? checkoutButton : ""}
             </div>
         </div>
+
     )
 }
 

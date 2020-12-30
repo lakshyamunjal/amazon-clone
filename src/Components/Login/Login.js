@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { constants } from '../../constants';
 import { authetication } from '../../firebase';
+import { useStateValue } from '../../StateProvider';
 import classes from './Login.module.css';
 
 function Login() {
 
+    const [{ user }] = useStateValue();
     const history = useHistory();
     const loginErrorMessage = (<p className={classes.ErrorMessage}>Invalid username/password</p>);
     const registerErrorMessage = (<p className={classes.ErrorMessage}>Email id already in use!</p>);
     const invalidEmailErrorMessage = (<p className={classes.ErrorMessage}>Invalid email id!</p>);
+    const userNotLoginError = (<p className={classes.ErrorMessage}>You need to Login before placing/viewing order!</p>);
 
     // bootstrap spinner
     const loginSpinner = (
@@ -34,11 +37,13 @@ function Login() {
     const [isValidUser, setValidUser] = useState(true);
     const [isNewUser, setNewUser] = useState(true);
     const [isValidEmailForRegistration, setValidEmailForRegistration] = useState(true);
+    const [loginError, setLoginError] = useState(user);
 
     const signIn = (event) => {
         setNewUser(true);       // hide register error message if visible
         setValidEmailForRegistration(true);     // hide invalid email error message if visible
         setShowLoginSpinner(true);
+        setLoginError(false);
 
         // by default, page will refresh because this function is linked to a button inside a form
         event.preventDefault();     // prevents the page to refresh
@@ -58,6 +63,7 @@ function Login() {
     const register = () => {
         setValidUser(true);
         setShowRegisterSpinner(true);
+        setLoginError(false);
 
         // move to registration page
         const promise = authetication.createUserWithEmailAndPassword(email, password);
@@ -135,6 +141,7 @@ function Login() {
             >{showRegisterSpinner ? registerSpinner : "Create your amazon account"}</button>
 
             {isNewUser == false ? registerErrorMessage : isValidEmailForRegistration == false ? invalidEmailErrorMessage : null}
+            {!loginError ? userNotLoginError : null}
             <br />
         </div>
     )

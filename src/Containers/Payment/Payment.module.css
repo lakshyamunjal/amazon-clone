@@ -53,6 +53,10 @@ h5{
     font-size: 2vw;
 }
 
+.CardMessage{
+    font-size: 0.75vw;
+}
+
 .PaymentDetails {
     flex: 0.4;
 }

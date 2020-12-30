@@ -57,6 +57,7 @@ function Payment() {
         setProcessing(true);
 
         const cardNumber = elements.getElement(CardElement);     // CardElement is written below and it displays the Card Number input area
+        
         const payload = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: cardNumber,
@@ -92,11 +93,10 @@ function Payment() {
             // payment
             history.replace('/orders');
         }).catch(err => {
+            
+            history.push('/error');
             console.log(err);
         });
-
-
-
     }
 
     const handleChange = (event) => {
@@ -154,6 +154,8 @@ function Payment() {
                 <div className={classes.PaymentDetails}>
                     <form onSubmit={handleSubmit}>
                         <CardElement onChange={handleChange} />
+                        <strong className={classes.CardMessage}>Do not enter real card details!(try 4242424.... in card number, 04/24 expiry, 242 as CVV, 42424 as ZIP)</strong>
+                        <br/>
                         <strong className={classes.Price}>
                             Total Price: <ProductPrice price={getBasketTotal(basket)} />
                         </strong>

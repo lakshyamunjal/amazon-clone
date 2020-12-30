@@ -12,12 +12,12 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Orders from './Containers/Orders/Orders';
 
-const stripeAPIkey = "pk_test_51HzjrRLqYQpz7YYBTgt7qzcv3dY02vkHAk9RqVDiI2L9b366IX7bINvY3E9hFPmUONnD8fPpoabULkgJbyDLamjy00WWOgjzpT";
-const promise = loadStripe(stripeAPIkey);
+const stripePublicKey = "pk_test_51HzjrRLqYQpz7YYBTgt7qzcv3dY02vkHAk9RqVDiI2L9b366IX7bINvY3E9hFPmUONnD8fPpoabULkgJbyDLamjy00WWOgjzpT";
+const promise = loadStripe(stripePublicKey);
 
 function App() {
 
-  const [{ }, dispatch] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
 
   // it is going to store the email of the user in our current state
   // which can be used throughout the App
@@ -51,13 +51,15 @@ function App() {
         <Switch>
 
           <Route path='/orders'>
-            <Header />
-            <Orders />
+            <Elements stripe={promise}>
+              <Header />
+              <Orders />
+            </Elements>
           </Route>
 
           <Route path='/login'>
             <Header />
-            <Login />
+            <Login userLoggedIn={user != null ? true : false} />
           </Route>
 
           <Route path='/checkout'>

@@ -1,3 +1,4 @@
+// Initial store
 export const initialState = {
     basket: [],
     user: null
