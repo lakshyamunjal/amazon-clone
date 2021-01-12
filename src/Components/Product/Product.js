@@ -2,7 +2,7 @@ import React from 'react';
 import { useStateValue } from '../../StateProvider';
 import classes from './Product.module.css';
 import { motion } from "framer-motion";
-import ProductPrice from '../ProductPrice';
+import ProductPrice from '../ProductPrice/ProductPrice';
 
 function Product({ id, title, imageURL, price, rating }) {
 

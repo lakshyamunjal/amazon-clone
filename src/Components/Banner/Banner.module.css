@@ -1,9 +1,10 @@
 .Banner {
     width: 100%;
+    max-width: 100%;
     z-index: -1;
-    margin-bottom: -200px;
+    /* margin-bottom: -50px; */
     /* mask-image is for giving a faded effect */
-    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.4));
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.6));
     /* first rgba(0,0,0,1) -> rgba(0,0,0,0.4)  is used to specify that go from complete block color to faded color = 40%. Change 0.4 to lower to make it even fader */
 }
 

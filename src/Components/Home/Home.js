@@ -11,13 +11,13 @@ function Home() {
             {/* Products */}
             <div className={classes.row}>
                 <Product id='21231' title="OnePlus 8 Pro (Onyx Black 8GB RAM+128GB Storage)" imageURL="https://images-na.ssl-images-amazon.com/images/I/61YSMhOd5EL._SL1500_.jpg" price="54999" rating="4" />
-                <Product id='21141' title='Nescafe gold - 100g' imageURL='https://m.media-amazon.com/images/I/61xyIiQb9XL._AC_UL320_.jpg' price='451' rating='5' />
+                <Product id='21141' title='Nescafe gold - 100g' imageURL='https://images-na.ssl-images-amazon.com/images/I/61CQMq2GP2L._SL1000_.jpg' price='451' rating='5' />
             </div>
 
             <div className={classes.row}>
-                <Product id='85412' title='New Apple MacBook Air (13-inch, 1.1GHz Dual-core 10th-Generation Intel Core i3 Processor, 8GB RAM, 256GB Storage) - Silver' imageURL="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/macbook-air-gallery3-20201110?wid=2000&hei=1536&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1603399121000" price="79990" rating="4"/>
+                <Product id='85412' title='Apple MacBook Air (13-inch, 1.1GHz Dual-core Intel i3(10th) Processor, 8GB RAM, 256GB Storage) - Silver' imageURL="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/macbook-air-gallery3-20201110?wid=2000&hei=1536&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1603399121000" price="79990" rating="4"/>
                 <Product id='75214' title='Fire TV Stick 4K with Alexa Voice Remote | Stream in 4K resolution' imageURL='https://images-na.ssl-images-amazon.com/images/I/51G8wQVB8hL._SL1000_.jpg' price="4499.00" rating="4"/>
-                <Product id='21496' title='New Apple Watch Series 6 (GPS, 40mm) - Space Grey Aluminium Case with Black Sport Band' imageURL='https://images-na.ssl-images-amazon.com/images/I/719RMCQjW9L._SL1500_.jpg' price='40900' rating='5' />
+                <Product id='21496' title='Apple Watch Series 6 (GPS, 40mm) - Space Grey Aluminium Case with Black Sport Band' imageURL='https://images-na.ssl-images-amazon.com/images/I/719RMCQjW9L._SL1500_.jpg' price='40900' rating='5' />
 
             </div>
 

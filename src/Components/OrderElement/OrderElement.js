@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import classes from './OrderElement.module.css';
 import moment from "moment";        // used for timestamps
 import CheckoutProduct from '../CheckoutProduct/CheckoutProduct';
-import ProductPrice from '../ProductPrice';
 import hash from 'object-hash';
 import axios from '../../axios';
 import { useStateValue } from '../../StateProvider';
 import { database } from '../../firebase';
+import ProductPrice from '../ProductPrice/ProductPrice';
 
 function OrderElement({ orderDetails }) {
 

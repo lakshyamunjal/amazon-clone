@@ -58,14 +58,14 @@ function Subtotal() {
             <CurrencyFormat renderText={(value) => {
                 return (
                     <>
-                        <p>
+                        <p className={classes.Message}>
                             Subtotal({basket.length} items): <strong>{'\u20B9'}{value}</strong>
                         </p>
                         <small className={classes.Gift}>
                             <input type='checkbox' id='giftCheckbox'
                                 className={classes.Checkbox}
                                 onClick={checkboxClicked}
-                                disabled={true} />This order contains a gift
+                                disabled={true} /><span className={classes.Message}>This order contains a gift</span>
                         </small>
                     </>
                 )

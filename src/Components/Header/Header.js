@@ -3,12 +3,13 @@ import classes from './Header.module.css';
 import amazonIcon from '../../Images/amazon-icon.png';
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useStateValue } from '../../StateProvider';
 import { authetication } from '../../firebase';
 
 function Header() {
     const [{ user, basket }, dispatch] = useStateValue();
+    const history = useHistory();
 
     let loginOrLogutPage = '/login';        // loginOrLogutPage tells where to move if sign out 
     let username = null;
@@ -33,6 +34,10 @@ function Header() {
         authetication.signOut();        // logout user
     }
 
+    const moveToOrders = () => {
+        history.push('/orders');
+    }
+
     return (
         <div className={classes.header}>
             <Link to='/'>
@@ -53,9 +58,7 @@ function Header() {
 
                 <div className={classes.option}>
                     <span className={classes.lineOne}>Returns</span>
-                    <Link to='/orders'>
-                        <span className={classes.lineTwo}>&Orders</span>
-                    </Link>
+                    <span className={classes.lineTwo} style={{cursor: 'pointer'}} onClick={moveToOrders}>&Orders</span>
                 </div>
 
                 <div className={classes.option}>

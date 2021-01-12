@@ -3,11 +3,11 @@ import classes from './Payment.module.css';
 import { useStateValue } from '../../StateProvider';
 import CheckoutProduct from '../../Components/CheckoutProduct/CheckoutProduct';
 import { useElements, useStripe, CardElement } from '@stripe/react-stripe-js';
-import ProductPrice from '../../Components/ProductPrice';
 import { getBasketTotal } from '../../reducer';
 import { useHistory } from 'react-router-dom';
 import axios from '../../axios';
 import { database } from '../../firebase';
+import ProductPrice from '../../Components/ProductPrice/ProductPrice';
 
 function Payment() {
 

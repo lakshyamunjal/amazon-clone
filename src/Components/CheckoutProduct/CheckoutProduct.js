@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStateValue } from '../../StateProvider';
-import ProductPrice from '../ProductPrice';
+import ProductPrice from '../ProductPrice/ProductPrice';
 import classes from './CheckoutProduct.module.css';
 
 function CheckoutProduct({ id, image, title, price, rating, hideButton }) {
